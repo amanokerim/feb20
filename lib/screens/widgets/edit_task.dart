@@ -42,7 +42,11 @@ class _EditTaskState extends State<EditTask> {
 
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(
-          20.0, 20.0, 20.0, MediaQuery.of(context).viewInsets.bottom),
+        20.0,
+        20.0,
+        20.0,
+        MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
