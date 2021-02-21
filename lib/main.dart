@@ -1,4 +1,4 @@
-import 'package:feb20/screens/main_screen.dart';
+import 'package:feb20/screens/tasklist_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: MainScreen(),
+      home: TasklistScreen(),
     );
   }
 }
