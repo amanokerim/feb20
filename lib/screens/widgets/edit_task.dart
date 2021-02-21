@@ -18,6 +18,7 @@ class _EditTaskState extends State<EditTask> {
   TasklistCubit cubit;
   DateTime time;
   Task task;
+  String error = "";
 
   @override
   void initState() {
@@ -40,7 +41,8 @@ class _EditTaskState extends State<EditTask> {
     cubit = BlocProvider.of<TasklistCubit>(context);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.fromLTRB(
+          20.0, 20.0, 20.0, MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,6 +52,7 @@ class _EditTaskState extends State<EditTask> {
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
+          Text(error, style: TextStyle(color: Colors.red)),
           TextField(
             controller: _titleController,
             decoration: InputDecoration(
@@ -83,7 +86,7 @@ class _EditTaskState extends State<EditTask> {
           Center(
             child: FlatButton(
               onPressed: _editTask,
-              child: Text("Добавить", style: _theme.button),
+              child: Text("Изменить", style: _theme.button),
               color: Theme.of(context).primaryColor,
             ),
           ),
@@ -94,6 +97,10 @@ class _EditTaskState extends State<EditTask> {
   }
 
   void _editTask() {
+    if (time == null || _titleController.text.isEmpty) {
+      setState(() => error = "Заполните все поля");
+      return;
+    }
     Task task = Task(
       id: widget.task.id,
       time: time.toString(),

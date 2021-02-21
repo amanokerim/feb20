@@ -58,30 +58,8 @@ class _TasklistScreenState extends State<TasklistScreen>
               itemCount: state.tasks.length,
               itemBuilder: (BuildContext context, int index) {
                 Task task = state.tasks[index];
-                String time = task.time == null
-                    ? MyTime().toDdMmYyyy(DateTime.parse(task.time))
-                    : "";
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ListTile(
-                    title: Text(task.title),
-                    subtitle:
-                        Text("Срок: $time\nСтатус: ${STATUS[task.status]}"),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () => _buildEditSheet(context, task),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => _buildDeleteDialog(context, task),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                String time = MyTime().toDdMmYyyy(DateTime.parse(task.time));
+                return buildTaskItem(task, time, context);
               },
             );
           return Container();
@@ -100,6 +78,29 @@ class _TasklistScreenState extends State<TasklistScreen>
     );
   }
 
+  Padding buildTaskItem(Task task, String time, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: ListTile(
+        title: Text(task.title),
+        subtitle: Text("Срок: $time\nСтатус: ${STATUS[task.status]}"),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () => _buildEditSheet(context, task),
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => _buildDeleteDialog(context, task),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future _buildDeleteDialog(BuildContext context, Task task) {
     return showDialog(
       context: context,
@@ -111,6 +112,7 @@ class _TasklistScreenState extends State<TasklistScreen>
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => AddTask(),
+      isScrollControlled: true,
     );
   }
 
@@ -118,6 +120,7 @@ class _TasklistScreenState extends State<TasklistScreen>
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => EditTask(task),
+      isScrollControlled: true,
     );
   }
 }

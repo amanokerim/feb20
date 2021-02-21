@@ -13,6 +13,7 @@ class _AddTaskState extends State<AddTask> {
   TextEditingController _titleController;
   DateTime time;
   TasklistCubit cubit;
+  String error = "";
 
   @override
   void initState() {
@@ -32,7 +33,8 @@ class _AddTaskState extends State<AddTask> {
     cubit = BlocProvider.of<TasklistCubit>(context);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.fromLTRB(
+          20.0, 20.0, 20.0, MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,6 +44,7 @@ class _AddTaskState extends State<AddTask> {
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
+          Center(child: Text(error, style: TextStyle(color: Colors.red))),
           TextField(
             controller: _titleController,
             decoration: InputDecoration(
@@ -79,10 +82,15 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void _addTask() {
+    if (time == null || _titleController.text.isEmpty) {
+      setState(() => error = "Заполните все поля");
+      return;
+    }
     Task task = Task(
       time: time.toString(),
       title: _titleController.text,
     );
+
     cubit.add(task);
     Navigator.of(context).pop();
   }
