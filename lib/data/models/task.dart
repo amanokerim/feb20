@@ -11,4 +11,13 @@ class Task {
     this.title,
     this.status,
   });
+
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      id: map["id"],
+      time: map["time"],
+      title: map["title"],
+      status: map["status"],
+    );
+  }
 }
