@@ -1,3 +1,4 @@
+import 'package:feb20/data/models/task.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
@@ -26,7 +27,7 @@ class Dtbase {
       onCreate: (Database db, int version) async {
         await db.execute("""CREATE TABLE IF NOT EXISTS $_tableName (
           id INTEGER PRIMARY KEY,
-          time INTEGER,
+          time TEXT,
           title TEXT,
           status INTEGER
           )""");
@@ -42,8 +43,13 @@ class Dtbase {
       return db.query(_tableName, where: "status=?", whereArgs: [status]);
   }
 
-  Future<int> insert(Map<String, dynamic> values) async {
+  Future<int> insert(Task task) async {
     Database db = await instance.database;
+    Map<String, dynamic> values = {
+      "title": task.title,
+      "time": task.time,
+      "status": 0,
+    };
     return await db.insert(_tableName, values);
   }
 

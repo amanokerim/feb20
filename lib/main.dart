@@ -13,12 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TasklistCubit()..init(),
+      create: (context) => TasklistCubit()..getTasks(),
       child: MaterialApp(
         title: 'Task List',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.brown,
+          textTheme: TextTheme(
+            button: TextStyle(color: Colors.white),
+          ),
         ),
         home: TasklistScreen(),
       ),

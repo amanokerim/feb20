@@ -12,4 +12,7 @@ class TasklistInitial extends TasklistState {}
 class TasklistShow extends TasklistState {
   final List<Task> tasks;
   TasklistShow(this.tasks);
+
+  @override
+  List<Object> get props => [tasks];
 }
