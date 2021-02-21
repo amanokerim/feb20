@@ -56,12 +56,12 @@ class _AddTaskState extends State<AddTask> {
                 "Срок: ",
                 style: _theme.subtitle1,
               ),
-              time == null
-                  ? FlatButton(
-                      onPressed: () => _selectTime(context),
-                      child: Text("Выбрать срок"),
-                    )
-                  : Text(MyTime().toDdMmYyyy(time) + " г."),
+              FlatButton(
+                onPressed: () => _selectTime(context),
+                child: Text(time == null
+                    ? "Выбрать срок"
+                    : MyTime().toDdMmYyyy(time) + " г."),
+              ),
             ],
           ),
           SizedBox(height: 10.0),
@@ -90,7 +90,7 @@ class _AddTaskState extends State<AddTask> {
   Future<void> _selectTime(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: time ?? DateTime.now(),
       firstDate: DateTime(2000, 1, 1),
       lastDate: DateTime(2100, 1, 1),
     );

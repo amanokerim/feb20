@@ -53,6 +53,21 @@ class Dtbase {
     return await db.insert(_tableName, values);
   }
 
+  Future<int> edit(Task task) async {
+    Database db = await instance.database;
+    Map<String, dynamic> values = {
+      "title": task.title,
+      "time": task.time,
+      "status": task.status,
+    };
+    return await db.update(
+      _tableName,
+      values,
+      where: "id=?",
+      whereArgs: [task.id],
+    );
+  }
+
   Future<int> delete(int id) async {
     Database db = await instance.database;
     return await db.delete(_tableName, where: "id=?", whereArgs: [id]);

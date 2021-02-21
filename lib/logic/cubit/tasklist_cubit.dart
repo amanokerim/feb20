@@ -14,12 +14,15 @@ class TasklistCubit extends Cubit<TasklistState> {
     List<Map<String, dynamic>> tasksMap = await Dtbase.instance.getTasks();
     tasks = tasksMap.map((map) => Task.fromMap(map)).toList();
     emit(TasklistShow(tasks));
-    print(tasks.length);
   }
 
   add(Task task) async {
     await Dtbase.instance.insert(task);
     getTasks();
-    emit(TasklistShow(tasks));
+  }
+
+  edit(Task task) async {
+    await Dtbase.instance.edit(task);
+    getTasks();
   }
 }
