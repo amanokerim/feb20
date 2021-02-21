@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Task List',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.brown,
+          primarySwatch: Colors.blue,
           textTheme: TextTheme(
             button: TextStyle(color: Colors.white),
           ),

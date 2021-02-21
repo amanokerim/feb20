@@ -1,5 +1,6 @@
 class MyTime {
   String toDdMmYyyy(DateTime t) {
+    if (t == null) return "Не выбрано";
     return zerofy(t.day) + "." + zerofy(t.month) + "." + t.year.toString();
   }
 
